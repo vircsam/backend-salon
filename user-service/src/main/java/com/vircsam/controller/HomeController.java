@@ -1,5 +1,10 @@
 package com.vircsam.controller;
 
-public interface HomeController {
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+public interface HomeController {
+	
+	
+	
 }
