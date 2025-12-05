@@ -1,9 +1,7 @@
 package com.vircsam.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,67 +10,47 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vircsam.exception.UserException;
 import com.vircsam.model.User;
-import com.vircsam.repository.UserRepository;
+import com.vircsam.service.UserService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 	
-	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	
 	@PostMapping("/api/users")
 	public User createUser(@RequestBody @Valid User user) {
-		return userRepository.save(user);
+		
 	}
 	
 	@GetMapping("/api/users")
 	public List<User> getUser() {
-		return userRepository.findAll();
+		
 	}
 	
 	@GetMapping("/api/users/{id}")
-	public User getUserById(@PathVariable Long id) throws Exception {
-		Optional<User> otp = userRepository.findById(id);
-		if(otp.isPresent()) {
-			return otp.get();
-		}
+	public User getUserById(@PathVariable Long id) throws UserException {
 		
-		throw new Exception("User not found with id: "+ id);
 		
 	}
 	
 	
 	@PutMapping("/api/users/{id}")
 	public User updateUser(@RequestBody User user, @PathVariable Long id) throws Exception{
-		Optional<User> otp = userRepository.findById(id);
-		if(otp.isEmpty()) {
-			throw new Exception("User does not found with id: "+ id);
-		}
 		
-		User existingUser = otp.get();
-		existingUser.setEmail(user.getEmail());
-		existingUser.setFullName(user.getFullName());
-		existingUser.setPhone(user.getPhone());
-		existingUser.setRole(user.getRole());
-		
-		return userRepository.save(existingUser);
 	}
 	
 	@DeleteMapping("/api/users/{id}")
-	public String deleteUserById(@PathVariable Long id) throws Exception{
-		Optional<User> otp = userRepository.findById(id);
-		if(otp.isEmpty()) {
-			throw new Exception("User does not exist with id: "+ id);
-		}
+	public String deleteUserById(@PathVariable Long id) throws UserException{
 		
-		userRepository.deleteById(id);
-		return "User Deleted";
 	}
 	
 	

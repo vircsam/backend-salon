@@ -32,6 +32,10 @@ public class User {
 	@NotBlank(message="Name is mandatory")
 	private String fullName;
 	
+	
+	@NotBlank(message="username is mandatory")
+	private String userName;
+	
 	@NotBlank(message="Email is mandatory")
 	@Email
 	private String email;
