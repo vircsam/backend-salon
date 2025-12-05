@@ -2,6 +2,9 @@ package com.vircsam.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,44 +15,51 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vircsam.exception.UserException;
 import com.vircsam.model.User;
+import com.vircsam.repository.UserRepository;
 import com.vircsam.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
-
 @RestController
 @RequiredArgsConstructor
 public class UserController {
 	
-	private UserService userService;
+	private final UserService userService;
+
 	
 	
 	@PostMapping("/api/users")
-	public User createUser(@RequestBody @Valid User user) {
-		
+	public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
+		User createdUser = userService.createUser(user);
+		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/api/users")
-	public List<User> getUser() {
-		
+	public ResponseEntity<List<User>> getUser() {
+		List<User> users = userService.getAllUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
 	@GetMapping("/api/users/{id}")
-	public User getUserById(@PathVariable Long id) throws UserException {
-		
+	public ResponseEntity<User> getUserById(@PathVariable Long id) throws UserException {
+		User user = userService.getUserById(id);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 		
 	}
 	
 	
 	@PutMapping("/api/users/{id}")
-	public User updateUser(@RequestBody User user, @PathVariable Long id) throws Exception{
-		
+	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long id) throws Exception{
+		User updatedUser = userService.updateUser(user, id);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/api/users/{id}")
-	public String deleteUserById(@PathVariable Long id) throws UserException{
+	public ResponseEntity<String> deleteUserById(@PathVariable Long id) throws UserException{
+		userService.deleteUser(id);
+		return new ResponseEntity<>("User Deleted", HttpStatus.ACCEPTED);
 		
 	}
 	
