@@ -1,5 +1,15 @@
 package com.vircsam.service;
 
-public interface UserService {
+import java.util.List;
 
+import com.vircsam.model.User;
+
+
+public interface UserService {
+	
+	User createUser(User user);
+	List<User> getUser();
+	User getUserById(Long id);
+	User updateUser(User user, Long id);
+	void deleteUser(Long id);
 }
