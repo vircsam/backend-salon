@@ -22,13 +22,30 @@ public class User {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	
 	private String fullName;
+	
+	
 	private String email;
+	
+	
 	private String phone;
+	
+	
 	private String role;
 	
 	
+	private String password;
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
