@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vircsam.model.User;
 import com.vircsam.repository.UserRepository;
 
+import jakarta.validation.Valid;
+
 
 
 @RestController
@@ -25,7 +27,7 @@ public class UserController {
 	
 	
 	@PostMapping("/api/users")
-	public User createUser(@RequestBody User user) {
+	public User createUser(@RequestBody @Valid User user) {
 		return userRepository.save(user);
 	}
 	
