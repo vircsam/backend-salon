@@ -3,8 +3,9 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<section name="java.lang.Class">
 		<list key="findhistory">
-			<item value="sql"/>
+			<item value="mysql-dri"/>
 			<item value="dependency"/>
+			<item value="sql"/>
 			<item value="jpa"/>
 		</list>
 	</section>
